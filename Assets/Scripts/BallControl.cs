@@ -6,8 +6,8 @@ public class BallControl : MonoBehaviour
 {
     private Rigidbody2D rigidbody2D;
 
-    public float xInitialForce;
-    public float yInitialForce;
+    public float initialForce;
+    public float maxYInitialForce;
 
     private Vector2 trajectoryOrigin;
 
@@ -35,8 +35,9 @@ public class BallControl : MonoBehaviour
 
     void PushBall()
     {
-        float yRandomInitialForce = Random.Range(-yInitialForce, yInitialForce);
+        float yRandomInitialForce = Random.Range(-maxYInitialForce, maxYInitialForce);
         float randomDirection = Random.Range(0, 2);
+        float xInitialForce = Mathf.Sqrt(Mathf.Pow(initialForce,2) - Mathf.Pow(yRandomInitialForce,2));
         if (randomDirection < 1f) rigidbody2D.AddForce(new Vector2(-xInitialForce, yRandomInitialForce));
         else rigidbody2D.AddForce(new Vector2(xInitialForce, yRandomInitialForce));
     }
