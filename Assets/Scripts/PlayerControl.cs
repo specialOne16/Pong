@@ -41,7 +41,6 @@ public class PlayerControl : MonoBehaviour
     public void AddScore()
     {
         score++;
-        print(score);
     }
 
     public void ResetScore()
