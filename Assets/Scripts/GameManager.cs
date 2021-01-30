@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public PlayerControl player2;
     public BallControl ball;
     public Trajectory trajectory;
+    public BallControl fireBall;
 
     private Rigidbody2D rigidBodyPlayer1;
     private Rigidbody2D rigidBodyPlayer2;
@@ -18,17 +19,33 @@ public class GameManager : MonoBehaviour
 
     public int maxScore;
 
+    public float timeUntilNextFireball = 100;
+    private float remainingTimeUntilNextFireball;
+
     void Start()
     {
         rigidBodyPlayer1 = player1.GetComponent<Rigidbody2D>();
         rigidBodyPlayer2 = player2.GetComponent<Rigidbody2D>();
         rigidBodyBall= ball.GetComponent<Rigidbody2D>();
         ballCollider = ball.GetComponent<CircleCollider2D>();
+        remainingTimeUntilNextFireball = timeUntilNextFireball;
+        fireBall.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        
+        remainingTimeUntilNextFireball -= Time.deltaTime;
+        if(remainingTimeUntilNextFireball < 0)
+        {
+            remainingTimeUntilNextFireball = timeUntilNextFireball;
+            throwFireBall();
+        }
+    }
+
+    void throwFireBall()
+    {
+        fireBall.gameObject.SetActive(true);
+        fireBall.SendMessage("RestartGame", null, SendMessageOptions.RequireReceiver);
     }
 
     void OnGUI()

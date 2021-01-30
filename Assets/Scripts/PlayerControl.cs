@@ -8,6 +8,7 @@ public class PlayerControl : MonoBehaviour
     public KeyCode downButton = KeyCode.S;
     public float speed = 10f;
     public float yBoundary = 9f;
+    public SideWall mySideWall;
     private Rigidbody2D rigidbody2D;
     private int score;
     private ContactPoint2D lastContactPoint;
@@ -32,6 +33,11 @@ public class PlayerControl : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.name.Equals("fireBall"))
+        {
+            mySideWall.givePointToEnemy();
+            collision.gameObject.SetActive(false);
+        }
         if (collision.gameObject.name.Equals("ball"))
         {
             lastContactPoint = collision.GetContact(0);

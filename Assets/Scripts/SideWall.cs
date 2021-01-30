@@ -7,19 +7,27 @@ public class SideWall : MonoBehaviour
     [SerializeField]
     private GameManager gameManager;
     public PlayerControl player;
+    public BallControl ball;
 
     void OnTriggerEnter2D(Collider2D collideObject)
     {
-        if(collideObject.name == "ball")
+        if (collideObject.name == "ball")
         {
-            player.AddScore();
+            givePointToEnemy();
         }
-
-        if(player.Score < gameManager.maxScore)
+        if (collideObject.name == "fireBall")
         {
-            collideObject.gameObject.SendMessage("RestartGame", 2f, SendMessageOptions.RequireReceiver);
+            collideObject.gameObject.SetActive(false);
         }
-
     }
+
+    public void givePointToEnemy()
+    {
+        player.AddScore();
+        if (player.Score < gameManager.maxScore)
+        {
+            ball.SendMessage("RestartGame", 2f, SendMessageOptions.RequireReceiver);
+        }
+    } 
 
 }
