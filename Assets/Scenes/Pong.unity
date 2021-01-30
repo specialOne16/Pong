@@ -340,6 +340,7 @@ MonoBehaviour:
   ball: {fileID: 1507664382}
   trajectory: {fileID: 45561591}
   fireBall: {fileID: 35700577}
+  ballAtCollision: {fileID: 740481717}
   maxScore: 2
   timeUntilNextFireball: 10
 --- !u!4 &147344646

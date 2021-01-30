@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public BallControl ball;
     public Trajectory trajectory;
     public BallControl fireBall;
+    public GameObject ballAtCollision;
 
     private Rigidbody2D rigidBodyPlayer1;
     private Rigidbody2D rigidBodyPlayer2;
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
         {
             isDebugWindowShown = !isDebugWindowShown;
             trajectory.enabled = !trajectory.enabled;
+            ballAtCollision.SetActive(isDebugWindowShown);
         }
 
         if (isDebugWindowShown)
