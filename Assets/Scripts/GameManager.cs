@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public PlayerControl player2;
     public BallControl ball;
     public Trajectory trajectory;
+    public BallControl powerUp;
     public BallControl fireBall;
     public GameObject ballAtCollision;
 
@@ -20,7 +21,10 @@ public class GameManager : MonoBehaviour
 
     public int maxScore;
 
-    public float timeUntilNextFireball = 100;
+    public float timeUntilNextPowerUp= 10;
+    private float remainingTimeUntilNextPowerUp;
+
+    public float timeUntilNextFireball = 10;
     private float remainingTimeUntilNextFireball;
 
     void Start()
@@ -29,25 +33,39 @@ public class GameManager : MonoBehaviour
         rigidBodyPlayer2 = player2.GetComponent<Rigidbody2D>();
         rigidBodyBall= ball.GetComponent<Rigidbody2D>();
         ballCollider = ball.GetComponent<CircleCollider2D>();
-        remainingTimeUntilNextFireball = timeUntilNextFireball;
+        remainingTimeUntilNextPowerUp = timeUntilNextPowerUp;
+        remainingTimeUntilNextFireball = timeUntilNextFireball + Random.Range(4,10);
+        powerUp.gameObject.SetActive(false);
         fireBall.gameObject.SetActive(false);
     }
 
     void Update()
     {
+        remainingTimeUntilNextPowerUp -= Time.deltaTime;
+        if (remainingTimeUntilNextPowerUp < 0)
+        {
+            remainingTimeUntilNextPowerUp = timeUntilNextPowerUp;
+            throwPowerUp();
+        }
         remainingTimeUntilNextFireball -= Time.deltaTime;
-        if(remainingTimeUntilNextFireball < 0)
+        if (remainingTimeUntilNextFireball < 0)
         {
             remainingTimeUntilNextFireball = timeUntilNextFireball;
             throwFireBall();
         }
     }
 
+    void throwPowerUp()
+    {
+        powerUp.gameObject.SetActive(true);
+        powerUp.SendMessage("RestartGame", null, SendMessageOptions.RequireReceiver);
+    }
     void throwFireBall()
     {
         fireBall.gameObject.SetActive(true);
         fireBall.SendMessage("RestartGame", null, SendMessageOptions.RequireReceiver);
     }
+
 
     void OnGUI()
     {

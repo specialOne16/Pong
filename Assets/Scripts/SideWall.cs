@@ -15,6 +15,10 @@ public class SideWall : MonoBehaviour
         {
             givePointToEnemy();
         }
+        if (collideObject.name == "powerUp")
+        {
+            collideObject.gameObject.SetActive(false);
+        }
         if (collideObject.name == "fireBall")
         {
             collideObject.gameObject.SetActive(false);

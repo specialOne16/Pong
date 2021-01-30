@@ -13,6 +13,9 @@ public class PlayerControl : MonoBehaviour
     private int score;
     private ContactPoint2D lastContactPoint;
 
+    public float powerUpDuration = 10;
+    private float remainingPowerUpDuration = 0;
+
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();    
@@ -29,10 +32,25 @@ public class PlayerControl : MonoBehaviour
         Vector3 position = rigidbody2D.position;
         position.y = Mathf.Clamp(position.y, -yBoundary, yBoundary);
         rigidbody2D.position = position;
+
+        if(remainingPowerUpDuration > 0)
+        {
+            remainingPowerUpDuration -= Time.deltaTime;
+            if(remainingPowerUpDuration <= 0)
+            {
+                transform.localScale = new Vector2(1,1);
+            }
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.name.Equals("powerUp"))
+        {
+            remainingPowerUpDuration = powerUpDuration;
+            transform.localScale = new Vector2(1, 2);
+            collision.gameObject.SetActive(false);
+        }
         if (collision.gameObject.name.Equals("fireBall"))
         {
             mySideWall.givePointToEnemy();
