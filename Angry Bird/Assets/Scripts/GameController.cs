@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour
             birds[i].OnBirdDestroyed += ChangeBird;
             birds[i].OnBirdShot += AssignTrail;
         }
-        for (int i = 0; i < birds.Count; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
             enemies[i].OnEnemyDestroyed+= CheckGameEnd;
         }
