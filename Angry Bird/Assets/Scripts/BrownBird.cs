@@ -26,10 +26,8 @@ public class BrownBird : Bird
         if (!_hasExplode)
         {
             Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, _explodeRadius);
-            Debug.Log(hitColliders.Length);
             foreach (var hitCollider in hitColliders)
             {
-                Debug.Log(hitCollider.gameObject.name);
                 Rigidbody2D other = hitCollider.gameObject.GetComponent<Rigidbody2D>();
                 if(other != null)
                     other.AddForce((other.gameObject.transform.position - transform.position) * _explodeForce);
