@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 6f;
+    float defaultSpeed;
 
     int floorMask;
     Vector3 movement;
@@ -17,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         playerRigidBody = GetComponent<Rigidbody>();
         health = GetComponent<PlayerHealth>();
+        defaultSpeed = speed;
     }
 
     private void FixedUpdate()
@@ -50,5 +53,17 @@ public class PlayerMovement : MonoBehaviour
     {
         bool isWalking = h != 0f || v != 0f;
         anim.SetBool("IsWalking", isWalking);
+    }
+
+    public void IncreaseSpeed(float amount)
+    {
+        speed += amount;
+        StartCoroutine(resetSpeed(4));
+    }
+
+    IEnumerator resetSpeed(float buffDuration)
+    {
+        yield return new WaitForSeconds(buffDuration);
+        speed = defaultSpeed;
     }
 }

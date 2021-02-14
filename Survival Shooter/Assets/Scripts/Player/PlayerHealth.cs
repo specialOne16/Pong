@@ -78,4 +78,10 @@ public class PlayerHealth : MonoBehaviour
         playerMovement.enabled = false;
         playerShooting.enabled = false;
     }
+
+    public void IncreaseHealth(int amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, startingHealth);
+        healthSlider.value = currentHealth;
+    }
 }
